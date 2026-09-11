@@ -40,6 +40,10 @@
     nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 6%;height:72px;background:transparent;border-bottom:1px solid transparent;transition:all .4s}
     nav.on{background:rgba(12,12,11,.93);backdrop-filter:blur(24px);border-bottom-color:var(--bs)}
     .nlogo{text-decoration:none;display:flex;align-items:center}
+    .nlogo img{height:46px;width:auto;transition:opacity .25s}
+    .nlogo:hover img{opacity:.8}
+    .nlogo-text{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;font-style:italic;color:var(--ds);letter-spacing:2px;transition:color .25s;line-height:1}
+    .nlogo:hover .nlogo-text{color:var(--dsl)}
     .nlinks{display:flex;gap:32px;list-style:none;align-items:center}
     .nlinks a{font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--crd);text-decoration:none;transition:color .25s;position:relative}
     .nlinks a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--ds);transform:scaleX(0);transform-origin:left;transition:transform .3s}
@@ -226,6 +230,81 @@
     .ft-bot{max-width:1100px;margin:24px auto 0;display:flex;justify-content:space-between;align-items:center;font-size:9.5px;color:rgba(245,239,228,.18);flex-wrap:wrap;gap:8px}
     .ft-bot a{color:rgba(245,239,228,.18);text-decoration:none}
     .ft-bot a:hover{color:var(--ds)}
+    /* CARRITO */
+    .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:700;opacity:0;visibility:hidden;transition:all .35s;backdrop-filter:blur(4px)}
+    .cart-overlay.open{opacity:1;visibility:visible}
+    .cart-drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100vw);background:var(--nc);z-index:701;transform:translateX(100%);transition:transform .4s var(--ease);display:flex;flex-direction:column;border-left:1px solid var(--bs)}
+    .cart-drawer.open{transform:translateX(0)}
+    .cart-head{padding:28px 28px 20px;border-bottom:1px solid var(--bs);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+    .cart-head h4{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--cr);display:flex;align-items:center;gap:10px}
+    .cart-count-badge{background:var(--ds);color:var(--np);font-size:10px;font-weight:700;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
+    .cart-close{background:none;border:1px solid var(--bs);color:var(--crd);width:34px;height:34px;cursor:none;font-size:16px;transition:all .2s;display:flex;align-items:center;justify-content:center}
+    .cart-close:hover{border-color:var(--ds);color:var(--ds)}
+    .cart-body{flex:1;overflow-y:auto;padding:20px 28px;scrollbar-width:thin;scrollbar-color:var(--bs) transparent}
+    .cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;opacity:.5}
+    .cart-empty svg{width:48px;height:48px;stroke:var(--crd);fill:none}
+    .cart-empty p{font-size:13px;color:var(--crd);text-align:center;line-height:1.7}
+    .cart-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--bs);align-items:flex-start}
+    .cart-item-img{width:62px;height:72px;object-fit:contain;background:var(--nm);flex-shrink:0;padding:6px}
+    .cart-item-info{flex:1;min-width:0}
+    .cart-item-line{font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--ds);font-weight:600;display:block;margin-bottom:3px;opacity:.8}
+    .cart-item-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;color:var(--cr);line-height:1.2;margin-bottom:6px}
+    .cart-item-price{font-size:13px;color:var(--dsl);font-weight:700}
+    .cart-qty{display:flex;align-items:center;gap:0;margin-top:10px;border:1px solid var(--bs);width:fit-content}
+    .cart-qty button{background:none;border:none;color:var(--crd);width:28px;height:28px;font-size:15px;cursor:none;transition:all .2s;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
+    .cart-qty button:hover{background:var(--bs);color:var(--cr)}
+    .cart-qty span{font-size:12px;color:var(--cr);width:28px;text-align:center;font-weight:600}
+    .cart-item-del{background:none;border:none;color:rgba(245,239,228,.2);cursor:none;font-size:14px;padding:4px;transition:color .2s;flex-shrink:0}
+    .cart-item-del:hover{color:#e05555}
+    .cart-foot{padding:20px 28px 28px;border-top:1px solid var(--bs);flex-shrink:0}
+    .cart-total-row{margin-bottom:4px}
+    .cart-total-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--crd);font-weight:600;display:block;margin-bottom:4px}
+    .cart-total-val{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:400;color:var(--ds);display:block;line-height:1}
+    .cart-items-count{font-size:11px;color:var(--crd);margin-bottom:16px;display:block}
+    .cart-note{width:100%;background:var(--nm);border:1px solid var(--bs);color:var(--cr);padding:12px 14px;font-size:12px;font-family:'DM Sans',sans-serif;resize:none;margin-bottom:16px;transition:border-color .2s;outline:none}
+    .cart-note:focus{border-color:var(--ds)}
+    .cart-note::placeholder{color:rgba(245,239,228,.3)}
+    .btn-cart-wa{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;background:#25D366;color:#fff;border:none;padding:16px;font-size:9px;letter-spacing:3px;text-transform:uppercase;font-weight:700;font-family:'DM Sans',sans-serif;cursor:none;transition:all .28s}
+    .btn-cart-wa:hover{background:#1fcb5c;transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,.3)}
+    .btn-cart-wa svg{width:18px;height:18px;fill:white;flex-shrink:0}
+    /* CARRITO NAV ICON */
+    .n-cart{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--bs);color:var(--crd);transition:all .25s;background:none;cursor:none;position:relative}
+    .n-cart svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.5}
+    .n-cart:hover{border-color:var(--ds);color:var(--ds)}
+    .n-cart-badge{position:absolute;top:-6px;right:-6px;background:var(--ds);color:var(--np);font-size:9px;font-weight:700;width:17px;height:17px;border-radius:50%;display:none;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
+    .n-cart-badge.show{display:flex}
+    /* BTN AGREGAR */
+    .btn-agregar{width:100%;border:1px solid var(--ds);background:none;color:var(--ds);padding:12px;font-size:8px;letter-spacing:3px;text-transform:uppercase;font-weight:700;font-family:'DM Sans',sans-serif;cursor:none;transition:all .25s;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px}
+    .btn-agregar:hover{background:var(--ds);color:var(--np)}
+    .btn-agregar.added{background:var(--vb);border-color:var(--vb);color:var(--cr)}
+    /* GALERÍA CARRUSEL */
+    .gal-auto-wrap{overflow:hidden;position:relative}
+    .gal-auto-wrap::before,.gal-auto-wrap::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:10;pointer-events:none}
+    .gal-auto-wrap::before{left:0;background:linear-gradient(to right,var(--nm),transparent)}
+    .gal-auto-wrap::after{right:0;background:linear-gradient(to left,var(--nm),transparent)}
+    .gal-auto-track{display:flex;gap:20px;padding:0 8%;width:max-content;animation:galScroll 36s linear infinite}
+    .gal-auto-wrap:hover .gal-auto-track{animation-play-state:paused}
+    @keyframes galScroll{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+    .gal-auto-item{width:320px;flex-shrink:0;position:relative;overflow:hidden;border:1px solid var(--bs);transition:transform .4s var(--ease),border-color .3s}
+    .gal-auto-item:hover{transform:translateY(-5px);border-color:var(--bo)}
+    .gal-auto-item img{width:100%;height:240px;object-fit:cover;display:block;transition:transform .7s ease}
+    .gal-auto-item:hover img{transform:scale(1.06)}
+    .gal-auto-item .gal-caption{position:absolute;bottom:0;left:0;right:0;padding:24px 20px;background:linear-gradient(to top,rgba(12,12,11,.92),transparent);opacity:0;transition:opacity .35s}
+    .gal-auto-item:hover .gal-caption{opacity:1}
+    /* RECETAS CARRUSEL */
+    .rec-carousel-wrap{overflow:hidden;position:relative;cursor:default}
+    .rec-carousel-wrap::before,.rec-carousel-wrap::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:10;pointer-events:none}
+    .rec-carousel-wrap::before{left:0;background:linear-gradient(to right,var(--nc),transparent)}
+    .rec-carousel-wrap::after{right:0;background:linear-gradient(to left,var(--nc),transparent)}
+    .rec-carousel-track{display:flex;gap:20px;padding:0 8%;width:max-content;animation:recScroll 38s linear infinite}
+    .rec-carousel-wrap:hover .rec-carousel-track{animation-play-state:paused}
+    @keyframes recScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .rec-card-sl{width:320px;flex-shrink:0;background:var(--nm);border:1px solid var(--bs);display:flex;flex-direction:column;overflow:hidden;transition:border-color .3s,transform .35s var(--ease)}
+    .rec-card-sl:hover{border-color:var(--bo);transform:translateY(-5px)}
+    .rec-card-sl .rec-img{height:210px;position:relative;overflow:hidden;flex-shrink:0}
+    .rec-card-sl .rec-img img{width:100%;height:100%;object-fit:cover;transition:transform .65s ease}
+    .rec-card-sl:hover .rec-img img{transform:scale(1.07)}
+    .rec-card-sl .rec-body{padding:20px 22px 26px;flex:1;display:flex;flex-direction:column}
     /* REVEAL */
     .rv{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
     .rvl{opacity:0;transform:translateX(-28px);transition:opacity .8s ease,transform .8s ease}
@@ -249,19 +328,15 @@
 
 <!-- LOADER -->
 <div id="loader">
-  <svg class="ld-pulse" width="48" height="48" viewBox="0 0 48 48" fill="none">
-    <path d="M24 8 L28 20 L40 20 L30 28 L34 40 L24 32 L14 40 L18 28 L8 20 L20 20 Z" stroke="#C9A24A" stroke-width=".8" fill="none"/>
-  </svg>
+  <img class="ld-pulse" src="img/logo-allgourmet-gold.png" alt="All Gourmet" style="width:130px;height:130px;object-fit:contain"/>
   <div class="ld-line" id="ldLine"></div>
-  <span class="ld-sub" id="ldSub">all gourmet</span>
+  <span class="ld-sub" id="ldSub">esencia de sabor</span>
 </div>
 
 <!-- NAV -->
 <nav id="nav">
   <a href="#" class="nlogo" aria-label="All Gourmet inicio">
-    <svg width="140" height="28" viewBox="0 0 140 28" fill="none">
-      <text x="0" y="20" font-family="Cormorant Garamond,serif" font-size="20" font-weight="300" fill="#F5EFE4">all gourmet</text>
-    </svg>
+    <span class="nlogo-text">all gourmet</span>
   </a>
   <ul class="nlinks">
     <li><a href="#productos">Productos</a></li>
@@ -270,12 +345,12 @@
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <div class="nav-right">
+    <button class="n-cart" onclick="toggleCart()" aria-label="Carrito">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="n-cart-badge" id="cartBadge">0</span>
+    </button>
     <a href="https://instagram.com/allgourmetco" class="n-ig" target="_blank" rel="noopener" aria-label="Instagram @allgourmetco">
       <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-    </a>
-    <a href="https://wa.me/573042330403" class="nwa" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Pedir ahora
     </a>
   </div>
   <button class="n-ham" id="ham" aria-label="Menú"><span></span><span></span><span></span></button>
@@ -291,6 +366,26 @@
     <a href="https://instagram.com/allgourmetco" target="_blank" rel="noopener">@allgourmetco</a>
     <span style="color:rgba(245,239,228,.2)">·</span>
     <a href="https://wa.me/573042330403" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</div>
+
+<!-- BANNER PRODUCTOS -->
+<section style="padding-top:72px;background:var(--ncc);position:relative;overflow:hidden">
+  <div style="position:relative;width:100%;max-height:620px;overflow:hidden;display:flex;align-items:center;justify-content:center">
+    <img src="img/banner-productos.png" alt="Colección All Gourmet — Aceites y Reducciones" style="width:100%;height:auto;max-height:620px;object-fit:cover;object-position:center;display:block;filter:brightness(.92)"/>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(12,12,11,.35) 0%,transparent 30%,transparent 70%,rgba(12,12,11,.7) 100%);pointer-events:none"></div>
+    <div style="position:absolute;bottom:40px;left:0;right:0;text-align:center">
+      <span style="font-size:8px;letter-spacing:5px;text-transform:uppercase;color:var(--ds);font-weight:600;display:block;margin-bottom:10px">colección 2026</span>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3vw,40px);font-weight:300;color:var(--cr);line-height:1.1">Aceite de Oliva · Reducción Balsámica</p>
+    </div>
+  </div>
+</section>
+
+<!-- LOGO DIVIDER -->
+<div style="background:var(--ncc);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px 0;position:relative">
+  <div style="position:absolute;left:8%;right:8%;top:50%;height:1px;background:linear-gradient(to right,transparent,rgba(201,162,74,.25) 30%,rgba(201,162,74,.25) 70%,transparent)"></div>
+  <div style="background:var(--ncc);padding:0 40px;position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px">
+    <img src="img/logo-allgourmet-gold.png" alt="All Gourmet" style="height:90px;width:auto;opacity:.92"/>
   </div>
 </div>
 
@@ -313,11 +408,7 @@
   </div>
   <div class="hero-right">
     <div class="hero-showcase" id="heroShowcase">
-      <div class="sc-img active"><img src="img/ao-lineup.png" alt="Aceites de Oliva All Gourmet"/></div>
-      <div class="sc-img"><img src="img/b-lineup.png" alt="Reducciones Balsámicas All Gourmet"/></div>
-      <div class="sc-img"><img src="img/ao-res.png" alt="Aceite Carne de Res"/></div>
-      <div class="sc-img"><img src="img/b-res.png" alt="Balsámico Carne de Res"/></div>
-      <div class="sc-img"><img src="img/ao-pescado.png" alt="Aceite Pescado"/></div>
+      <div class="sc-img active"><img src="img/Conjunto-productos.png" alt="All Gourmet — Todos los productos" style="object-fit:cover"/></div>
     </div>
   </div>
 </section>
@@ -334,334 +425,217 @@
   </div>
 </div>
 
-<!-- STORY -->
-<section class="story-wrap">
-  <div class="story">
-    <div class="story-img rvl">
-      <img src="img/ao-lineup.png" alt="Línea de Aceites All Gourmet"/>
-      <div class="story-img-accent"></div>
-    </div>
-    <div class="story-text rv">
-      <span class="sec-lbl">Nuestra filosofía</span>
-      <h2>Ingredientes <em>reales.</em><br>Sabor que se nota.</h2>
-      <p>En All Gourmet creemos que cocinar bien empieza por los ingredientes correctos. Por eso desarrollamos dos líneas que se complementan: aceites infusionados para cocinar y marinar, y reducciones balsámicas para terminar y realzar.</p>
-      <p>Cada variedad está diseñada para un propósito específico. Sin conservantes, sin artificiales. Solo sabor con carácter propio.</p>
-      <div class="story-nums">
-        <div class="sn"><span class="sn-n">8</span><span class="sn-l">Productos</span></div>
-        <div class="sn"><span class="sn-n">2</span><span class="sn-l">Líneas</span></div>
-        <div class="sn"><span class="sn-n">0</span><span class="sn-l">Conservantes</span></div>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 <!-- PRODUCTOS -->
 <section class="productos" id="productos">
   <div class="sec-head rv">
     <span class="sec-lbl">Colección 2026</span>
-    <h2>Dos líneas,<br><em>un solo propósito</em></h2>
-    <p>Selecciona la línea que buscas. Cuatro sabores en cada una, diseñados para acompañar carnes, aves, pescados y mucho más.</p>
+    <h2>Todos nuestros<br><em>productos</em></h2>
+    <p>Ocho sabores, dos líneas. Diseñados para acompañar carnes, aves, pescados y mucho más.</p>
   </div>
 
-  <!-- TABS -->
-  <div class="line-tabs-wrap">
-    <button class="line-tab active" onclick="switchLine('aceite',this)">
-      Aceite de Oliva <span class="line-tab-count">4</span>
-    </button>
-    <button class="line-tab" onclick="switchLine('balsamico',this)">
-      Reducción Balsámica <span class="line-tab-count">4</span>
-    </button>
+  <!-- ACEITE DE OLIVA — subtítulo de línea -->
+  <div style="max-width:1400px;margin:0 auto 20px;display:flex;align-items:center;gap:20px">
+    <div style="height:1px;flex:1;background:linear-gradient(to right,var(--bo),transparent)"></div>
+    <span style="font-size:8px;letter-spacing:4px;text-transform:uppercase;color:var(--ds);font-weight:600;white-space:nowrap">Aceite de Oliva Extra Virgen · 250 ml · <strong style="color:var(--cr);font-weight:700">$24.900</strong></span>
+    <div style="height:1px;flex:1;background:linear-gradient(to left,var(--bo),transparent)"></div>
   </div>
-
-  <!-- ACEITE DE OLIVA -->
-  <div class="prod-line active" id="line-aceite">
-    <div class="prod-line-header rv">
-      <div>
-        <h3>Aceite de Oliva <em>Extra Virgen</em></h3>
-        <p>Infusionado con especias y hierbas naturales · Botella 250 ml</p>
+  <div class="prod-grid" style="max-width:1400px;margin:0 auto 48px">
+    <div class="prod-card rv">
+      <span class="prod-num">01</span>
+      <div class="prod-img"><img src="img/ao-res.png" alt="Aceite Carne de Res"/></div>
+      <div class="prod-body">
+        <span class="prod-tag">Aceite de Oliva</span>
+        <h3>Carne de Res</h3>
+        <p class="prod-ingred">Romero · Ajo · Tomillo · Pimienta negra</p>
+        <p class="prod-desc">Robusto y aromático. Infusionado con hierbas frescas que realzan cada corte de res. Ideal para marinar antes de la parrilla o para terminar un plato caliente.</p>
+        <p class="prod-formato">✦ Botella 250 ml &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$24.900</span></p>
+        <button class="btn-agregar" onclick="addToCart('Aceite Carne de Res','Aceite de Oliva',24900,'img/ao-res.png',this)">+ Agregar al carrito</button>
       </div>
     </div>
-    <div class="prod-grid">
-      <div class="prod-card rv">
-        <span class="prod-num">01</span>
-        <div class="prod-img"><img src="img/ao-res.png" alt="Aceite Carne de Res"/></div>
-        <div class="prod-body">
-          <span class="prod-tag">Aceite de Oliva</span>
-          <h3>Carne de Res</h3>
-          <p class="prod-ingred">Romero · Ajo · Tomillo · Pimienta negra</p>
-          <p class="prod-desc">Robusto y aromático. Infusionado con hierbas frescas que realzan cada corte de res. Ideal para marinar antes de la parrilla o para terminar un plato caliente.</p>
-          <div class="prod-pairs-label">Maridajes perfectos</div>
-          <div class="prod-pairs">
-            <span class="prod-pair">Entrecot</span><span class="prod-pair">Churrasco</span><span class="prod-pair">Brochetas</span><span class="prod-pair">Chimichurri</span>
-          </div>
-          <p class="prod-formato">✦ Botella 250 ml</p>
-        </div>
+    <div class="prod-card rv" style="transition-delay:.08s">
+      <span class="prod-num">02</span>
+      <div class="prod-img"><img src="img/ao-cerdo.png" alt="Aceite Cerdo y Pollo"/></div>
+      <div class="prod-body">
+        <span class="prod-tag">Aceite de Oliva</span>
+        <h3>Cerdo y Pollo</h3>
+        <p class="prod-ingred">Achiote · Naranja · Jengibre · Pimienta rosada</p>
+        <p class="prod-desc">Vibrante y cítrico. El achiote aporta color y profundidad; la naranja y el jengibre añaden frescura y carácter. El aliado perfecto de las carnes blancas.</p>
+        <p class="prod-formato">✦ Botella 250 ml &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$24.900</span></p>
+        <button class="btn-agregar" onclick="addToCart('Aceite Cerdo y Pollo','Aceite de Oliva',24900,'img/ao-cerdo.png',this)">+ Agregar al carrito</button>
       </div>
-      <div class="prod-card rv" style="transition-delay:.08s">
-        <span class="prod-num">02</span>
-        <div class="prod-img"><img src="img/ao-cerdo.png" alt="Aceite Cerdo y Pollo"/></div>
-        <div class="prod-body">
-          <span class="prod-tag">Aceite de Oliva</span>
-          <h3>Cerdo y Pollo</h3>
-          <p class="prod-ingred">Achiote · Naranja · Jengibre · Pimienta rosada</p>
-          <p class="prod-desc">Vibrante y cítrico. El achiote aporta color y profundidad; la naranja y el jengibre añaden frescura y carácter. El aliado perfecto de las carnes blancas.</p>
-          <div class="prod-pairs-label">Maridajes perfectos</div>
-          <div class="prod-pairs">
-            <span class="prod-pair">Pollo asado</span><span class="prod-pair">Costilla</span><span class="prod-pair">Marinados</span><span class="prod-pair">Glaseados</span>
-          </div>
-          <p class="prod-formato">✦ Botella 250 ml</p>
-        </div>
+    </div>
+    <div class="prod-card rv" style="transition-delay:.16s">
+      <span class="prod-num">03</span>
+      <div class="prod-img"><img src="img/ao-clasico.png" alt="Aceite Clásico"/></div>
+      <div class="prod-body">
+        <span class="prod-tag">Aceite de Oliva</span>
+        <h3>Clásico</h3>
+        <p class="prod-ingred">Albahaca · Perejil · Cilantro · Cebollín</p>
+        <p class="prod-desc">El más versátil de la colección. Hierbas frescas en equilibrio perfecto. Eleva cualquier preparación sin dominarla. De la pasta a la ensalada, siempre funciona.</p>
+        <p class="prod-formato">✦ Botella 250 ml &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$24.900</span></p>
+        <button class="btn-agregar" onclick="addToCart('Aceite Clásico','Aceite de Oliva',24900,'img/ao-clasico.png',this)">+ Agregar al carrito</button>
       </div>
-      <div class="prod-card rv" style="transition-delay:.16s">
-        <span class="prod-num">03</span>
-        <div class="prod-img"><img src="img/ao-clasico.png" alt="Aceite Clásico"/></div>
-        <div class="prod-body">
-          <span class="prod-tag">Aceite de Oliva</span>
-          <h3>Clásico</h3>
-          <p class="prod-ingred">Albahaca · Perejil · Cilantro · Cebollín</p>
-          <p class="prod-desc">El más versátil de la colección. Hierbas frescas en equilibrio perfecto. Eleva cualquier preparación sin dominarla. De la pasta a la ensalada, siempre funciona.</p>
-          <div class="prod-pairs-label">Maridajes perfectos</div>
-          <div class="prod-pairs">
-            <span class="prod-pair">Pastas</span><span class="prod-pair">Ensaladas</span><span class="prod-pair">Bruschetta</span><span class="prod-pair">Dips</span>
-          </div>
-          <p class="prod-formato">✦ Botella 250 ml</p>
-        </div>
-      </div>
-      <div class="prod-card rv" style="transition-delay:.24s">
-        <span class="prod-num">04</span>
-        <div class="prod-img"><img src="img/ao-pescado.png" alt="Aceite Pescado"/></div>
-        <div class="prod-body">
-          <span class="prod-tag">Aceite de Oliva</span>
-          <h3>Pescado</h3>
-          <p class="prod-ingred">Limón · Perejil · Eneldo · Pimienta blanca</p>
-          <p class="prod-desc">Delicado y elegante. El limón y el eneldo crean el compañero perfecto para el pescado fresco. Suave, aromático y limpio en cada bocado.</p>
-          <div class="prod-pairs-label">Maridajes perfectos</div>
-          <div class="prod-pairs">
-            <span class="prod-pair">Salmón</span><span class="prod-pair">Lubina</span><span class="prod-pair">Mariscos</span><span class="prod-pair">Carpaccio</span>
-          </div>
-          <p class="prod-formato">✦ Botella 250 ml</p>
-        </div>
+    </div>
+    <div class="prod-card rv" style="transition-delay:.24s">
+      <span class="prod-num">04</span>
+      <div class="prod-img"><img src="img/ao-pescado.png" alt="Aceite Pescado"/></div>
+      <div class="prod-body">
+        <span class="prod-tag">Aceite de Oliva</span>
+        <h3>Pescado</h3>
+        <p class="prod-ingred">Limón · Perejil · Eneldo · Pimienta blanca</p>
+        <p class="prod-desc">Delicado y elegante. El limón y el eneldo crean el compañero perfecto para el pescado fresco. Suave, aromático y limpio en cada bocado.</p>
+        <p class="prod-formato">✦ Botella 250 ml &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$24.900</span></p>
+        <button class="btn-agregar" onclick="addToCart('Aceite Pescado','Aceite de Oliva',24900,'img/ao-pescado.png',this)">+ Agregar al carrito</button>
       </div>
     </div>
   </div>
 
-  <!-- REDUCCIÓN BALSÁMICA -->
-  <div class="prod-line" id="line-balsamico">
-    <div class="prod-line-header rv">
-      <div>
-        <h3>Reducción de Vinagre <em>Balsámico</em></h3>
-        <p>Elaborada con ingredientes naturales seleccionados · Tubo 300 g</p>
+  <!-- REDUCCIÓN BALSÁMICA — subtítulo de línea -->
+  <div style="max-width:1400px;margin:0 auto 20px;display:flex;align-items:center;gap:20px">
+    <div style="height:1px;flex:1;background:linear-gradient(to right,var(--bo),transparent)"></div>
+    <span style="font-size:8px;letter-spacing:4px;text-transform:uppercase;color:var(--ds);font-weight:600;white-space:nowrap">Reducción de Vinagre Balsámico · 300 g · <strong style="color:var(--cr);font-weight:700">$19.900</strong></span>
+    <div style="height:1px;flex:1;background:linear-gradient(to left,var(--bo),transparent)"></div>
+  </div>
+  <div class="prod-grid" style="max-width:1400px;margin:0 auto">
+    <div class="prod-card rv">
+      <span class="prod-num">05</span>
+      <div class="prod-img"><img src="img/b-res.png" alt="Balsámico Carne de Res"/></div>
+      <div class="prod-body">
+        <span class="prod-tag">Reducción Balsámica</span>
+        <h3>Carne de Res</h3>
+        <p class="prod-ingred">Vino tinto · Café</p>
+        <p class="prod-desc">Intensa y profunda. Las notas de vino tinto y café se fusionan con el vinagre balsámico para crear una reducción con carácter que complementa los cortes más nobles.</p>
+        <p class="prod-formato">✦ Tubo 300 g &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$19.900</span></p>
+        <button class="btn-agregar" onclick="addToCart('Balsámico Carne de Res','Reducción Balsámica',19900,'img/b-res.png',this)">+ Agregar al carrito</button>
       </div>
     </div>
-    <div class="prod-grid">
-      <div class="prod-card rv">
-        <span class="prod-num">01</span>
-        <div class="prod-img"><img src="img/b-res.png" alt="Balsámico Carne de Res"/></div>
-        <div class="prod-body">
-          <span class="prod-tag">Reducción Balsámica</span>
-          <h3>Carne de Res</h3>
-          <p class="prod-ingred">Vino tinto · Café</p>
-          <p class="prod-desc">Intensa y profunda. Las notas de vino tinto y café se fusionan con el vinagre balsámico para crear una reducción con carácter que complementa los cortes más nobles.</p>
-          <div class="prod-pairs-label">Maridajes perfectos</div>
-          <div class="prod-pairs">
-            <span class="prod-pair">Entrecot</span><span class="prod-pair">Parrillada</span><span class="prod-pair">Champiñones</span><span class="prod-pair">Quesos maduros</span>
-          </div>
-          <p class="prod-formato">✦ Tubo 300 g</p>
-        </div>
+    <div class="prod-card rv" style="transition-delay:.08s">
+      <span class="prod-num">06</span>
+      <div class="prod-img"><img src="img/b-cerdo.png" alt="Balsámico Pollo y Cerdo"/></div>
+      <div class="prod-body">
+        <span class="prod-tag">Reducción Balsámica</span>
+        <h3>Pollo y Cerdo</h3>
+        <p class="prod-ingred">Naranja · Anís · Jengibre</p>
+        <p class="prod-desc">Frutal y especiada. La naranja aporta frescura, el anís profundidad aromática y el jengibre un toque cálido y envolvente. Perfecta para glasear carnes blancas.</p>
+        <p class="prod-formato">✦ Tubo 300 g &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$19.900</span></p>
+        <button class="btn-agregar" onclick="addToCart('Balsámico Pollo y Cerdo','Reducción Balsámica',19900,'img/b-cerdo.png',this)">+ Agregar al carrito</button>
       </div>
-      <div class="prod-card rv" style="transition-delay:.08s">
-        <span class="prod-num">02</span>
-        <div class="prod-img"><img src="img/b-cerdo.png" alt="Balsámico Pollo y Cerdo"/></div>
-        <div class="prod-body">
-          <span class="prod-tag">Reducción Balsámica</span>
-          <h3>Pollo y Cerdo</h3>
-          <p class="prod-ingred">Naranja · Anís · Jengibre</p>
-          <p class="prod-desc">Frutal y especiada. La naranja aporta frescura, el anís profundidad aromática y el jengibre un toque cálido y envolvente. Perfecta para glasear carnes blancas.</p>
-          <div class="prod-pairs-label">Maridajes perfectos</div>
-          <div class="prod-pairs">
-            <span class="prod-pair">Pollo asado</span><span class="prod-pair">Costilla</span><span class="prod-pair">Ensaladas</span><span class="prod-pair">Quesos cremosos</span>
-          </div>
-          <p class="prod-formato">✦ Tubo 300 g</p>
-        </div>
+    </div>
+    <div class="prod-card rv" style="transition-delay:.16s">
+      <span class="prod-num">07</span>
+      <div class="prod-img"><img src="img/b-clasico.png" alt="Balsámico Clásico"/></div>
+      <div class="prod-body">
+        <span class="prod-tag">Reducción Balsámica</span>
+        <h3>Clásico</h3>
+        <p class="prod-ingred">Vino blanco · Finas hierbas</p>
+        <p class="prod-desc">Agridulce en equilibrio perfecto. Elaborada con vino blanco y finas hierbas seleccionadas. La referencia de la colección: versátil, elegante e indispensable.</p>
+        <p class="prod-formato">✦ Tubo 300 g &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$19.900</span></p>
+        <button class="btn-agregar" onclick="addToCart('Balsámico Clásico','Reducción Balsámica',19900,'img/b-clasico.png',this)">+ Agregar al carrito</button>
       </div>
-      <div class="prod-card rv" style="transition-delay:.16s">
-        <span class="prod-num">03</span>
-        <div class="prod-img"><img src="img/b-clasico.png" alt="Balsámico Clásico"/></div>
-        <div class="prod-body">
-          <span class="prod-tag">Reducción Balsámica</span>
-          <h3>Clásico</h3>
-          <p class="prod-ingred">Vino blanco · Finas hierbas</p>
-          <p class="prod-desc">Agridulce en equilibrio perfecto. Elaborada con vino blanco y finas hierbas seleccionadas. La referencia de la colección: versátil, elegante e indispensable.</p>
-          <div class="prod-pairs-label">Maridajes perfectos</div>
-          <div class="prod-pairs">
-            <span class="prod-pair">Caprese</span><span class="prod-pair">Mozzarella</span><span class="prod-pair">Verduras</span><span class="prod-pair">Pizzas</span>
-          </div>
-          <p class="prod-formato">✦ Tubo 300 g</p>
-        </div>
-      </div>
-      <div class="prod-card rv" style="transition-delay:.24s">
-        <span class="prod-num">04</span>
-        <div class="prod-img"><img src="img/b-pescado.png" alt="Balsámico Pescado"/></div>
-        <div class="prod-body">
-          <span class="prod-tag">Reducción Balsámica</span>
-          <h3>Pescado</h3>
-          <p class="prod-ingred">Ajo · Perejil · Pimienta</p>
-          <p class="prod-desc">Fresca y aromática. El ajo y el perejil aportan un perfil vegetal y limpio que realza el sabor del pescado sin opacar su delicadeza natural. Brillante y expresiva.</p>
-          <div class="prod-pairs-label">Maridajes perfectos</div>
-          <div class="prod-pairs">
-            <span class="prod-pair">Salmón</span><span class="prod-pair">Mariscos</span><span class="prod-pair">Ceviche</span><span class="prod-pair">Vegetales</span>
-          </div>
-          <p class="prod-formato">✦ Tubo 300 g</p>
-        </div>
+    </div>
+    <div class="prod-card rv" style="transition-delay:.24s">
+      <span class="prod-num">08</span>
+      <div class="prod-img"><img src="img/b-pescado.png" alt="Balsámico Pescado"/></div>
+      <div class="prod-body">
+        <span class="prod-tag">Reducción Balsámica</span>
+        <h3>Pescado</h3>
+        <p class="prod-ingred">Ajo · Perejil · Pimienta</p>
+        <p class="prod-desc">Fresca y aromática. El ajo y el perejil aportan un perfil vegetal y limpio que realza el sabor del pescado sin opacar su delicadeza natural. Brillante y expresiva.</p>
+        <p class="prod-formato">✦ Tubo 300 g &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$19.900</span></p>
+        <button class="btn-agregar" onclick="addToCart('Balsámico Pescado','Reducción Balsámica',19900,'img/b-pescado.png',this)">+ Agregar al carrito</button>
       </div>
     </div>
   </div>
 </section>
 
 <!-- GALERÍA -->
-<section style="padding:100px 0;background:var(--nm)" id="galeria">
-  <div class="sec-head rv" style="padding:0 8%;margin-bottom:32px">
+<section style="padding:100px 0;background:var(--nm);overflow:hidden" id="galeria">
+  <div class="sec-head rv" style="padding:0 8%;margin-bottom:56px">
     <span class="sec-lbl">Fotografía editorial</span>
     <h2>Los productos<br><em>en su hábitat</em></h2>
-    <p>Arrastra para explorar. Ambas líneas en contexto.</p>
+    <p>Ambas líneas en contexto. Pasa el cursor para pausar.</p>
   </div>
-  <div class="gal-filter rv">
-    <button class="gf-btn active" onclick="filterGal('all',this)">Todo</button>
-    <button class="gf-btn" onclick="filterGal('aceite',this)">Aceite de Oliva</button>
-    <button class="gf-btn" onclick="filterGal('balsamico',this)">Reducción Balsámica</button>
-  </div>
-  <div class="gal-track-wrap" id="galTrack">
-    <div class="gal-track" id="galItems">
-      <div class="gal-item" data-line="aceite"><img src="img/ao-gal-res.png" alt="Aceite Carne de Res en acción"/><div class="gal-caption"><span class="gc-line">Aceite de Oliva</span><span class="gc-tag">Carne de Res</span><h5>El arte de marinar</h5></div></div>
-      <div class="gal-item" data-line="balsamico"><img src="img/b-gal-res.png" alt="Balsámico Carne de Res"/><div class="gal-caption"><span class="gc-line">Reducción Balsámica</span><span class="gc-tag">Carne de Res</span><h5>Vino tinto y café</h5></div></div>
-      <div class="gal-item" data-line="aceite"><img src="img/ao-gal-cerdo.png" alt="Aceite Cerdo y Pollo en acción"/><div class="gal-caption"><span class="gc-line">Aceite de Oliva</span><span class="gc-tag">Cerdo y Pollo</span><h5>Aroma cítrico y especiado</h5></div></div>
-      <div class="gal-item" data-line="balsamico"><img src="img/b-gal-cerdo.png" alt="Balsámico Pollo y Cerdo"/><div class="gal-caption"><span class="gc-line">Reducción Balsámica</span><span class="gc-tag">Pollo y Cerdo</span><h5>Naranja y anís</h5></div></div>
-      <div class="gal-item" data-line="aceite"><img src="img/ao-gal-clasico.png" alt="Aceite Clásico en acción"/><div class="gal-caption"><span class="gc-line">Aceite de Oliva</span><span class="gc-tag">Clásico</span><h5>Hierbas en su punto</h5></div></div>
-      <div class="gal-item" data-line="balsamico"><img src="img/b-gal-clasico.png" alt="Balsámico Clásico"/><div class="gal-caption"><span class="gc-line">Reducción Balsámica</span><span class="gc-tag">Clásico</span><h5>Finas hierbas y vino blanco</h5></div></div>
-      <div class="gal-item" data-line="aceite"><img src="img/ao-gal-pescado.png" alt="Aceite Pescado en acción"/><div class="gal-caption"><span class="gc-line">Aceite de Oliva</span><span class="gc-tag">Pescado</span><h5>Limón y eneldo fresco</h5></div></div>
-      <div class="gal-item" data-line="balsamico"><img src="img/b-gal-pescado.png" alt="Balsámico Pescado"/><div class="gal-caption"><span class="gc-line">Reducción Balsámica</span><span class="gc-tag">Pescado</span><h5>Ajo, perejil y pimienta</h5></div></div>
+  <div class="gal-auto-wrap">
+    <div class="gal-auto-track">
+      <!-- derecha a izquierda: mezcladas -->
+      <div class="gal-auto-item"><img src="img/b-gal-res.png" alt="Balsámico Carne de Res"/><div class="gal-caption"><span class="gc-line">Reducción Balsámica</span><span class="gc-tag">Carne de Res</span><h5>Vino tinto y café</h5></div></div>
+      <div class="gal-auto-item"><img src="img/ao-gal-cerdo.png" alt="Aceite Cerdo y Pollo"/><div class="gal-caption"><span class="gc-line">Aceite de Oliva</span><span class="gc-tag">Cerdo y Pollo</span><h5>Aroma cítrico y especiado</h5></div></div>
+      <div class="gal-auto-item"><img src="img/b-gal-pescado.png" alt="Balsámico Pescado"/><div class="gal-caption"><span class="gc-line">Reducción Balsámica</span><span class="gc-tag">Pescado</span><h5>Ajo, perejil y pimienta</h5></div></div>
+      <div class="gal-auto-item"><img src="img/ao-gal-res.png" alt="Aceite Carne de Res"/><div class="gal-caption"><span class="gc-line">Aceite de Oliva</span><span class="gc-tag">Carne de Res</span><h5>El arte de marinar</h5></div></div>
+      <div class="gal-auto-item"><img src="img/b-gal-cerdo.png" alt="Balsámico Pollo y Cerdo"/><div class="gal-caption"><span class="gc-line">Reducción Balsámica</span><span class="gc-tag">Pollo y Cerdo</span><h5>Naranja y anís</h5></div></div>
+      <div class="gal-auto-item"><img src="img/ao-gal-clasico.png" alt="Aceite Clásico"/><div class="gal-caption"><span class="gc-line">Aceite de Oliva</span><span class="gc-tag">Clásico</span><h5>Hierbas en su punto</h5></div></div>
+      <div class="gal-auto-item"><img src="img/b-gal-clasico.png" alt="Balsámico Clásico"/><div class="gal-caption"><span class="gc-line">Reducción Balsámica</span><span class="gc-tag">Clásico</span><h5>Finas hierbas y vino blanco</h5></div></div>
+      <div class="gal-auto-item"><img src="img/ao-gal-pescado.png" alt="Aceite Pescado"/><div class="gal-caption"><span class="gc-line">Aceite de Oliva</span><span class="gc-tag">Pescado</span><h5>Limón y eneldo fresco</h5></div></div>
+      <!-- duplicado para loop -->
+      <div class="gal-auto-item"><img src="img/b-gal-res.png" alt="Balsámico Carne de Res"/><div class="gal-caption"><span class="gc-line">Reducción Balsámica</span><span class="gc-tag">Carne de Res</span><h5>Vino tinto y café</h5></div></div>
+      <div class="gal-auto-item"><img src="img/ao-gal-cerdo.png" alt="Aceite Cerdo y Pollo"/><div class="gal-caption"><span class="gc-line">Aceite de Oliva</span><span class="gc-tag">Cerdo y Pollo</span><h5>Aroma cítrico y especiado</h5></div></div>
+      <div class="gal-auto-item"><img src="img/b-gal-pescado.png" alt="Balsámico Pescado"/><div class="gal-caption"><span class="gc-line">Reducción Balsámica</span><span class="gc-tag">Pescado</span><h5>Ajo, perejil y pimienta</h5></div></div>
+      <div class="gal-auto-item"><img src="img/ao-gal-res.png" alt="Aceite Carne de Res"/><div class="gal-caption"><span class="gc-line">Aceite de Oliva</span><span class="gc-tag">Carne de Res</span><h5>El arte de marinar</h5></div></div>
     </div>
   </div>
 </section>
 
 <!-- RECETAS -->
-<section class="recetas" id="recetas">
-  <div class="sec-head rv">
+<section class="recetas" id="recetas" style="padding:120px 0;overflow:hidden">
+  <div class="sec-head rv" style="padding:0 8%;margin-bottom:56px">
     <span class="sec-lbl">Combinaciones de sabor</span>
     <h2>Recetas que<br><em>elevan el plato</em></h2>
-    <p>Ocho preparaciones curadas. Una por cada variedad de las dos líneas.</p>
+    <p>Ocho preparaciones curadas. Pasa el cursor para pausar.</p>
   </div>
-  <div class="recetas-grid">
-    <div class="rec-card rv">
-      <div class="rec-img">
-        <img src="img/ao-rec-res.png" alt="Entrecot con Aceite Carne de Res"/>
-        <div class="rec-img-ov"></div>
-        <span class="rec-badge">Carne de Res</span>
-        <span class="rec-line-badge">Aceite</span>
+
+  <div class="rec-carousel-wrap" id="recCarousel">
+    <div class="rec-carousel-track" id="recTrack">
+      <!-- Mezcladas: Aceite Clásico, Balsámico Res, Aceite Cerdo, Balsámico Pescado, Aceite Res, Balsámico Cerdo, Aceite Pescado, Balsámico Clásico -->
+      <div class="rec-card-sl">
+        <div class="rec-img"><img src="img/ao-rec-clasico.png" alt="Bruschetta"/><div class="rec-img-ov"></div><span class="rec-badge">Clásico</span><span class="rec-line-badge">Aceite</span></div>
+        <div class="rec-body"><span class="rec-product">Aceite de Oliva · Clásico</span><h3>Bruschetta de Tomates</h3><p class="rec-desc">Pan artesanal tostado con tomates cherry asados, ricotta fresca y aceite all gourmet Clásico.</p><p class="rec-tip">✦ 15 min · 4 personas</p></div>
       </div>
-      <div class="rec-body">
-        <span class="rec-product">Aceite de Oliva · Carne de Res</span>
-        <h3>Entrecot al Romero</h3>
-        <p class="rec-desc">Corte de res marinado 2 horas en aceite all gourmet Carne de Res con romero fresco y ajo asado. A la parrilla hasta el punto perfecto.</p>
-        <p class="rec-tip">✦ Tiempo: 25 min · Porción: 2 personas</p>
+      <div class="rec-card-sl">
+        <div class="rec-img"><img src="img/b-rec-res.png" alt="Filete Reducción"/><div class="rec-img-ov"></div><span class="rec-badge">Carne de Res</span><span class="rec-line-badge">Balsámico</span></div>
+        <div class="rec-body"><span class="rec-product">Reducción Balsámica · Carne de Res</span><h3>Filete con Reducción</h3><p class="rec-desc">Entrecot a la parrilla terminado con un hilo de reducción balsámica Carne de Res. Espárragos asados.</p><p class="rec-tip">✦ 30 min · 2 personas</p></div>
       </div>
-    </div>
-    <div class="rec-card rv" style="transition-delay:.06s">
-      <div class="rec-img">
-        <img src="img/b-rec-res.png" alt="Carne con Reducción Balsámica"/>
-        <div class="rec-img-ov"></div>
-        <span class="rec-badge">Carne de Res</span>
-        <span class="rec-line-badge">Balsámico</span>
+      <div class="rec-card-sl">
+        <div class="rec-img"><img src="img/ao-rec-cerdo.png" alt="Pollo Naranja"/><div class="rec-img-ov"></div><span class="rec-badge">Cerdo y Pollo</span><span class="rec-line-badge">Aceite</span></div>
+        <div class="rec-body"><span class="rec-product">Aceite de Oliva · Cerdo y Pollo</span><h3>Pollo a la Naranja</h3><p class="rec-desc">Pechuga marinada en aceite all gourmet Cerdo y Pollo con zumo de naranja y jengibre. Horneada.</p><p class="rec-tip">✦ 35 min · 2 personas</p></div>
       </div>
-      <div class="rec-body">
-        <span class="rec-product">Reducción Balsámica · Carne de Res</span>
-        <h3>Filete con Reducción</h3>
-        <p class="rec-desc">Entrecot a la parrilla terminado con un hilo de reducción balsámica Carne de Res. Espárragos asados, sal en escamas.</p>
-        <p class="rec-tip">✦ Tiempo: 30 min · Porción: 2 personas</p>
+      <div class="rec-card-sl">
+        <div class="rec-img"><img src="img/b-rec-pescado.png" alt="Salmón Balsámico"/><div class="rec-img-ov"></div><span class="rec-badge">Pescado</span><span class="rec-line-badge">Balsámico</span></div>
+        <div class="rec-body"><span class="rec-product">Reducción Balsámica · Pescado</span><h3>Salmón Balsámico</h3><p class="rec-desc">Filete de salmón con piel crujiente, terminado con reducción balsámica Pescado. Alcaparras y limón.</p><p class="rec-tip">✦ 20 min · 2 personas</p></div>
       </div>
-    </div>
-    <div class="rec-card rv" style="transition-delay:.12s">
-      <div class="rec-img">
-        <img src="img/ao-rec-cerdo.png" alt="Pollo con Aceite Cerdo y Pollo"/>
-        <div class="rec-img-ov"></div>
-        <span class="rec-badge">Cerdo y Pollo</span>
-        <span class="rec-line-badge">Aceite</span>
+      <div class="rec-card-sl">
+        <div class="rec-img"><img src="img/ao-rec-res.png" alt="Entrecot Romero"/><div class="rec-img-ov"></div><span class="rec-badge">Carne de Res</span><span class="rec-line-badge">Aceite</span></div>
+        <div class="rec-body"><span class="rec-product">Aceite de Oliva · Carne de Res</span><h3>Entrecot al Romero</h3><p class="rec-desc">Corte de res marinado 2 horas en aceite all gourmet Carne de Res con romero y ajo asado. Parrilla.</p><p class="rec-tip">✦ 25 min · 2 personas</p></div>
       </div>
-      <div class="rec-body">
-        <span class="rec-product">Aceite de Oliva · Cerdo y Pollo</span>
-        <h3>Pollo a la Naranja</h3>
-        <p class="rec-desc">Pechuga marinada en aceite all gourmet Cerdo y Pollo con zumo de naranja y jengibre. Horneada hasta dorar la piel perfectamente.</p>
-        <p class="rec-tip">✦ Tiempo: 35 min · Porción: 2 personas</p>
+      <div class="rec-card-sl">
+        <div class="rec-img"><img src="img/b-rec-cerdo.png" alt="Pollo Glaseado"/><div class="rec-img-ov"></div><span class="rec-badge">Pollo y Cerdo</span><span class="rec-line-badge">Balsámico</span></div>
+        <div class="rec-body"><span class="rec-product">Reducción Balsámica · Pollo y Cerdo</span><h3>Pollo Glaseado</h3><p class="rec-desc">Muslo asado, glaseado con reducción balsámica Pollo y Cerdo. Naranja caramelizada y tomillo fresco.</p><p class="rec-tip">✦ 40 min · 2 personas</p></div>
       </div>
-    </div>
-    <div class="rec-card rv" style="transition-delay:.18s">
-      <div class="rec-img">
-        <img src="img/b-rec-cerdo.png" alt="Pollo con Reducción Balsámica"/>
-        <div class="rec-img-ov"></div>
-        <span class="rec-badge">Pollo y Cerdo</span>
-        <span class="rec-line-badge">Balsámico</span>
+      <div class="rec-card-sl">
+        <div class="rec-img"><img src="img/ao-rec-pescado.png" alt="Salmón Eneldo"/><div class="rec-img-ov"></div><span class="rec-badge">Pescado</span><span class="rec-line-badge">Aceite</span></div>
+        <div class="rec-body"><span class="rec-product">Aceite de Oliva · Pescado</span><h3>Salmón con Eneldo</h3><p class="rec-desc">Salmón al horno rociado con aceite all gourmet Pescado. Limón, eneldo fresco y alcaparras.</p><p class="rec-tip">✦ 20 min · 2 personas</p></div>
       </div>
-      <div class="rec-body">
-        <span class="rec-product">Reducción Balsámica · Pollo y Cerdo</span>
-        <h3>Pollo Glaseado</h3>
-        <p class="rec-desc">Muslo de pollo asado, glaseado en los últimos minutos con reducción balsámica Pollo y Cerdo. Naranja caramelizada y tomillo fresco.</p>
-        <p class="rec-tip">✦ Tiempo: 40 min · Porción: 2 personas</p>
+      <div class="rec-card-sl">
+        <div class="rec-img"><img src="img/b-rec-clasico.png" alt="Caprese Balsámica"/><div class="rec-img-ov"></div><span class="rec-badge">Clásico</span><span class="rec-line-badge">Balsámico</span></div>
+        <div class="rec-body"><span class="rec-product">Reducción Balsámica · Clásico</span><h3>Caprese Balsámica</h3><p class="rec-desc">Mozzarella de búfala y tomates heirloom. Reducción balsámica Clásico en zigzag, albahaca y flor de sal.</p><p class="rec-tip">✦ 10 min · 2 personas</p></div>
       </div>
-    </div>
-    <div class="rec-card rv" style="transition-delay:.24s">
-      <div class="rec-img">
-        <img src="img/ao-rec-clasico.png" alt="Bruschetta con Aceite Clásico"/>
-        <div class="rec-img-ov"></div>
-        <span class="rec-badge">Clásico</span>
-        <span class="rec-line-badge">Aceite</span>
+      <!-- duplicado para loop infinito -->
+      <div class="rec-card-sl">
+        <div class="rec-img"><img src="img/ao-rec-clasico.png" alt="Bruschetta"/><div class="rec-img-ov"></div><span class="rec-badge">Clásico</span><span class="rec-line-badge">Aceite</span></div>
+        <div class="rec-body"><span class="rec-product">Aceite de Oliva · Clásico</span><h3>Bruschetta de Tomates</h3><p class="rec-desc">Pan artesanal tostado con tomates cherry asados, ricotta fresca y aceite all gourmet Clásico.</p><p class="rec-tip">✦ 15 min · 4 personas</p></div>
       </div>
-      <div class="rec-body">
-        <span class="rec-product">Aceite de Oliva · Clásico</span>
-        <h3>Bruschetta de Tomates</h3>
-        <p class="rec-desc">Pan artesanal tostado con tomates cherry asados, ricotta fresca y un generoso toque final de aceite all gourmet Clásico. Simple y memorable.</p>
-        <p class="rec-tip">✦ Tiempo: 15 min · Porción: 4 personas</p>
+      <div class="rec-card-sl">
+        <div class="rec-img"><img src="img/b-rec-res.png" alt="Filete Reducción"/><div class="rec-img-ov"></div><span class="rec-badge">Carne de Res</span><span class="rec-line-badge">Balsámico</span></div>
+        <div class="rec-body"><span class="rec-product">Reducción Balsámica · Carne de Res</span><h3>Filete con Reducción</h3><p class="rec-desc">Entrecot a la parrilla terminado con un hilo de reducción balsámica Carne de Res. Espárragos asados.</p><p class="rec-tip">✦ 30 min · 2 personas</p></div>
       </div>
-    </div>
-    <div class="rec-card rv" style="transition-delay:.30s">
-      <div class="rec-img">
-        <img src="img/b-rec-clasico.png" alt="Caprese con Reducción Balsámica Clásico"/>
-        <div class="rec-img-ov"></div>
-        <span class="rec-badge">Clásico</span>
-        <span class="rec-line-badge">Balsámico</span>
+      <div class="rec-card-sl">
+        <div class="rec-img"><img src="img/ao-rec-cerdo.png" alt="Pollo Naranja"/><div class="rec-img-ov"></div><span class="rec-badge">Cerdo y Pollo</span><span class="rec-line-badge">Aceite</span></div>
+        <div class="rec-body"><span class="rec-product">Aceite de Oliva · Cerdo y Pollo</span><h3>Pollo a la Naranja</h3><p class="rec-desc">Pechuga marinada en aceite all gourmet Cerdo y Pollo con zumo de naranja y jengibre. Horneada.</p><p class="rec-tip">✦ 35 min · 2 personas</p></div>
       </div>
-      <div class="rec-body">
-        <span class="rec-product">Reducción Balsámica · Clásico</span>
-        <h3>Caprese Balsámica</h3>
-        <p class="rec-desc">Mozzarella de búfala y tomates heirloom intercalados sobre pizarra. Reducción balsámica Clásico en zigzag, albahaca fresca y flor de sal.</p>
-        <p class="rec-tip">✦ Tiempo: 10 min · Porción: 2 personas</p>
-      </div>
-    </div>
-    <div class="rec-card rv" style="transition-delay:.36s">
-      <div class="rec-img">
-        <img src="img/ao-rec-pescado.png" alt="Salmón con Aceite Pescado"/>
-        <div class="rec-img-ov"></div>
-        <span class="rec-badge">Pescado</span>
-        <span class="rec-line-badge">Aceite</span>
-      </div>
-      <div class="rec-body">
-        <span class="rec-product">Aceite de Oliva · Pescado</span>
-        <h3>Salmón con Eneldo</h3>
-        <p class="rec-desc">Filete de salmón al horno rociado con aceite all gourmet Pescado antes y después de cocinar. Limón, eneldo fresco y alcaparras.</p>
-        <p class="rec-tip">✦ Tiempo: 20 min · Porción: 2 personas</p>
-      </div>
-    </div>
-    <div class="rec-card rv" style="transition-delay:.42s">
-      <div class="rec-img">
-        <img src="img/b-rec-pescado.png" alt="Salmón con Reducción Balsámica Pescado"/>
-        <div class="rec-img-ov"></div>
-        <span class="rec-badge">Pescado</span>
-        <span class="rec-line-badge">Balsámico</span>
-      </div>
-      <div class="rec-body">
-        <span class="rec-product">Reducción Balsámica · Pescado</span>
-        <h3>Salmón Balsámico</h3>
-        <p class="rec-desc">Filete de salmón con piel crujiente, terminado con reducción balsámica Pescado en espiral. Alcaparras, perejil picado y limón.</p>
-        <p class="rec-tip">✦ Tiempo: 20 min · Porción: 2 personas</p>
+      <div class="rec-card-sl">
+        <div class="rec-img"><img src="img/b-rec-pescado.png" alt="Salmón Balsámico"/><div class="rec-img-ov"></div><span class="rec-badge">Pescado</span><span class="rec-line-badge">Balsámico</span></div>
+        <div class="rec-body"><span class="rec-product">Reducción Balsámica · Pescado</span><h3>Salmón Balsámico</h3><p class="rec-desc">Filete de salmón con piel crujiente, terminado con reducción balsámica Pescado. Alcaparras y limón.</p><p class="rec-tip">✦ 20 min · 2 personas</p></div>
       </div>
     </div>
   </div>
@@ -693,9 +667,7 @@
 <footer>
   <div class="ft-inner">
     <div>
-      <svg width="140" height="28" viewBox="0 0 140 28" fill="none">
-        <text x="0" y="20" font-family="Cormorant Garamond,serif" font-size="20" font-weight="300" fill="#F5EFE4">all gourmet</text>
-      </svg>
+      <img src="img/logo-allgourmet-gold.png" alt="All Gourmet" style="height:72px;width:auto;display:block;margin-bottom:6px"/>
       <span class="ft-tag">esencia de sabor</span>
       <p class="ft-about">Aceites de oliva infusionados y reducciones balsámicas artesanales. Hechos en Colombia con ingredientes naturales seleccionados.</p>
       <div class="ft-social">
@@ -741,6 +713,34 @@
   </div>
 </footer>
 
+<!-- CARRITO DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h4>Carrito <span class="cart-count-badge" id="cartHeadCount">0</span></h4>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty" id="cartEmpty">
+      <svg viewBox="0 0 24 24" stroke-width="1"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <p>Tu carrito está vacío.<br>Agrega productos para continuar.</p>
+    </div>
+    <div id="cartItems"></div>
+  </div>
+  <div class="cart-foot" id="cartFoot" style="display:none">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total del pedido</span>
+      <span class="cart-total-val" id="cartTotal">$0</span>
+    </div>
+    <p class="cart-items-count" id="cartItemsCount"></p>
+    <textarea class="cart-note" id="cartNote" rows="2" placeholder="Nota para tu pedido (dirección, instrucciones...)"></textarea>
+    <button class="btn-cart-wa" onclick="sendToWhatsApp()">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Enviar pedido por WhatsApp
+    </button>
+  </div>
+</div>
+
 <script>
   // CURSOR
   const ring=document.getElementById('cring'),dot=document.getElementById('cdot');
@@ -768,10 +768,6 @@
   ham.addEventListener('click',()=>{ham.classList.toggle('open');drawer.classList.toggle('open')});
   function closeDrawer(){ham.classList.remove('open');drawer.classList.remove('open')}
 
-  // HERO SHOWCASE
-  const imgs=document.querySelectorAll('.sc-img');
-  let ci=0;
-  setInterval(()=>{imgs[ci].classList.remove('active');ci=(ci+1)%imgs.length;imgs[ci].classList.add('active')},3500);
 
   // SCROLL REVEALS
   const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:.12});
@@ -801,11 +797,13 @@
 
   // GALLERY DRAG SCROLL
   const track=document.getElementById('galTrack');
-  let isDown=false,startX,scrollL;
-  track.addEventListener('mousedown',e=>{isDown=true;track.classList.add('dragging');startX=e.pageX-track.offsetLeft;scrollL=track.scrollLeft});
-  track.addEventListener('mouseleave',()=>{isDown=false;track.classList.remove('dragging')});
-  track.addEventListener('mouseup',()=>{isDown=false;track.classList.remove('dragging')});
-  track.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();const x=e.pageX-track.offsetLeft;track.scrollLeft=scrollL-(x-startX)*1.4});
+  if(track){
+    let isDown=false,startX,scrollL;
+    track.addEventListener('mousedown',e=>{isDown=true;track.classList.add('dragging');startX=e.pageX-track.offsetLeft;scrollL=track.scrollLeft});
+    track.addEventListener('mouseleave',()=>{isDown=false;track.classList.remove('dragging')});
+    track.addEventListener('mouseup',()=>{isDown=false;track.classList.remove('dragging')});
+    track.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();const x=e.pageX-track.offsetLeft;track.scrollLeft=scrollL-(x-startX)*1.4});
+  }
 
   // HERO CANVAS
   const canvas=document.getElementById('hc');
@@ -823,6 +821,123 @@
     }
     drawC();
   }
+
+  // CARRITO
+  let cart = [];
+  try { cart = JSON.parse(localStorage.getItem('ag-cart') || '[]'); } catch(e){}
+
+  function saveCart(){ try{ localStorage.setItem('ag-cart', JSON.stringify(cart)); }catch(e){} }
+
+  function updateBadge(){
+    const total = cart.reduce((s,i)=>s+i.qty,0);
+    const badge = document.getElementById('cartBadge');
+    badge.textContent = total;
+    badge.style.display = total > 0 ? 'flex' : 'none';
+  }
+
+  function renderCart(){
+    const body = document.getElementById('cartBody');
+    const empty = document.getElementById('cartEmpty');
+    const items = document.getElementById('cartItems');
+    const foot = document.querySelector('.cart-foot');
+    const countEl = document.getElementById('cartHeadCount');
+    const countEl2 = document.getElementById('cartItemsCount');
+
+    const totalItems = cart.reduce((s,i)=>s+i.qty,0);
+    countEl.textContent = totalItems;
+    if(countEl2) countEl2.textContent = totalItems > 0 ? totalItems + (totalItems===1?' producto':' productos') : '';
+
+    if(cart.length === 0){
+      empty.style.display = 'flex';
+      items.style.display = 'none';
+      if(foot) foot.style.display = 'none';
+      return;
+    }
+    empty.style.display = 'none';
+    items.style.display = 'block';
+    if(foot) foot.style.display = 'block';
+
+    const total = cart.reduce((s,i)=>s+(i.price*i.qty),0);
+    document.getElementById('cartTotal').textContent = '$'+total.toLocaleString('es-CO');
+
+    items.innerHTML = cart.map((item,idx)=>`
+      <div class="cart-item">
+        <img src="${item.img}" alt="${item.name}" class="cart-item-img">
+        <div class="cart-item-info">
+          <span class="cart-item-line">${item.category}</span>
+          <p class="cart-item-name">${item.name}</p>
+          <p class="cart-item-price">$${(item.price*item.qty).toLocaleString('es-CO')}</p>
+          <div class="cart-qty">
+            <button onclick="updateQty(${idx},-1)">−</button>
+            <span>${item.qty}</span>
+            <button onclick="updateQty(${idx},1)">+</button>
+          </div>
+        </div>
+        <button class="cart-item-del" onclick="removeItem(${idx})">✕</button>
+      </div>`).join('');
+  }
+
+  function addToCart(name, category, price, img, btn){
+    const existing = cart.find(i=>i.name===name);
+    if(existing){ existing.qty++; }
+    else { cart.push({name, category, price, img, qty:1}); }
+    saveCart();
+    updateBadge();
+    renderCart();
+    // feedback visual en el botón
+    if(btn){
+      const orig = btn.textContent;
+      btn.textContent = '✓ Agregado';
+      btn.style.background = 'var(--vbl)';
+      setTimeout(()=>{ btn.textContent = orig; btn.style.background = ''; }, 1400);
+    }
+    // abrir carrito
+    document.getElementById('cartDrawer').classList.add('open');
+    document.getElementById('cartOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function updateQty(idx, delta){
+    cart[idx].qty += delta;
+    if(cart[idx].qty <= 0) cart.splice(idx,1);
+    saveCart();
+    updateBadge();
+    renderCart();
+  }
+
+  function removeItem(idx){
+    cart.splice(idx,1);
+    saveCart();
+    updateBadge();
+    renderCart();
+  }
+
+  function toggleCart(){
+    const drawer = document.getElementById('cartDrawer');
+    const overlay = document.getElementById('cartOverlay');
+    const isOpen = drawer.classList.contains('open');
+    drawer.classList.toggle('open');
+    overlay.classList.toggle('open');
+    document.body.style.overflow = isOpen ? '' : 'hidden';
+    if(!isOpen) renderCart();
+  }
+
+  function sendToWhatsApp(){
+    if(cart.length === 0) return;
+    const note = document.getElementById('cartNote').value.trim();
+    let msg = 'Hola, quiero hacer este pedido:\n\n';
+    cart.forEach(item=>{
+      msg += `• ${item.name} (${item.category}) × ${item.qty} — $${(item.price*item.qty).toLocaleString('es-CO')}\n`;
+    });
+    const total = cart.reduce((s,i)=>s+(i.price*i.qty),0);
+    msg += `\nTotal: $${total.toLocaleString('es-CO')}`;
+    if(note) msg += `\n\n${note}`;
+    const phone = '573042330403';
+    window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(msg), '_blank');
+  }
+
+  // inicializar badge al cargar
+  updateBadge();
 </script>
 </body>
 </html>
