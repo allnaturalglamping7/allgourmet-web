@@ -277,6 +277,29 @@
     .btn-agregar{width:100%;border:1px solid var(--ds);background:none;color:var(--ds);padding:12px;font-size:8px;letter-spacing:3px;text-transform:uppercase;font-weight:700;font-family:'DM Sans',sans-serif;cursor:none;transition:all .25s;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px}
     .btn-agregar:hover{background:var(--ds);color:var(--np)}
     .btn-agregar.added{background:var(--vb);border-color:var(--vb);color:var(--cr)}
+    /* PROD IMG OVERLAY */
+    .prod-img-ov{position:absolute;inset:0;background:rgba(12,12,11,.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;z-index:3}
+    .prod-card:hover .prod-img-ov{opacity:1}
+    .prod-img-ov span{font-size:7.5px;letter-spacing:4px;text-transform:uppercase;color:var(--cr);font-weight:600;border:1px solid rgba(245,239,228,.55);padding:10px 20px}
+    /* PRODUCT MODAL */
+    .pm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;padding:20px;box-sizing:border-box}
+    .pm-overlay.open{opacity:1;pointer-events:all}
+    .pm-box{background:var(--nc);border:1px solid var(--bs);max-width:860px;width:100%;max-height:90vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;position:relative;animation:pmIn .4s var(--ease) both;scrollbar-width:none}
+    .pm-box::-webkit-scrollbar{display:none}
+    @keyframes pmIn{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
+    .pm-close{position:absolute;top:14px;right:14px;background:var(--nm);border:1px solid var(--bs);color:var(--crd);width:34px;height:34px;font-size:13px;z-index:10;transition:all .2s;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:'DM Sans',sans-serif}
+    .pm-close:hover{border-color:var(--ds);color:var(--ds)}
+    .pm-img{background:var(--nm);display:flex;align-items:center;justify-content:center;min-height:360px;position:relative}
+    .pm-img img{width:80%;max-height:420px;object-fit:contain;padding:28px;box-sizing:border-box}
+    .pm-body{padding:44px 36px;display:flex;flex-direction:column;justify-content:center}
+    .pm-body .prod-tag{margin-bottom:10px}
+    .pm-name{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3vw,38px);font-weight:300;color:var(--cr);line-height:1.1;margin-bottom:6px}
+    .pm-body .prod-ingred{margin-bottom:20px}
+    .pm-desc{font-size:13px;color:var(--crd);line-height:1.9;font-weight:300;margin-bottom:24px;border-left:2px solid var(--ds);padding-left:16px}
+    .pm-pairs-label{font-size:7.5px;letter-spacing:3px;text-transform:uppercase;color:var(--ds);font-weight:600;margin-bottom:10px;opacity:.8;display:block}
+    .pm-pairs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px}
+    .pm-pair{font-size:10px;border:1px solid var(--bs);color:var(--crd);padding:5px 12px;font-weight:300}
+    .pm-formato{font-size:9px;letter-spacing:1.5px;color:rgba(201,162,74,.65);font-weight:500;padding-top:16px;border-top:1px solid var(--bs);text-transform:uppercase;margin-bottom:16px}
     /* GALERÍA CARRUSEL */
     .gal-auto-wrap{overflow:hidden;position:relative}
     .gal-auto-wrap::before,.gal-auto-wrap::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:10;pointer-events:none}
@@ -360,6 +383,12 @@
       /* CTA */
       .cta h2{font-size:clamp(32px,8vw,48px)}
       .cta p{margin-bottom:32px}
+      /* modal mobile */
+      .pm-box{grid-template-columns:1fr}
+      .pm-img{min-height:220px}
+      .pm-img img{max-height:260px}
+      .pm-body{padding:24px 20px}
+      .pm-name{font-size:28px}
     }
     @media(max-width:380px){
       .prod-grid{grid-template-columns:1fr}
@@ -495,49 +524,57 @@
   <div class="prod-grid" style="max-width:1400px;margin:0 auto 48px">
     <div class="prod-card rv">
       <span class="prod-num">01</span>
-      <div class="prod-img"><img src="img/ao-res.png" alt="Aceite Carne de Res"/></div>
+      <div class="prod-img" onclick="openProduct(0)" style="cursor:pointer">
+        <img src="img/ao-res.png" alt="Aceite Carne de Res"/>
+        <div class="prod-img-ov"><span>Ver detalles</span></div>
+      </div>
       <div class="prod-body">
         <span class="prod-tag">Aceite de Oliva</span>
         <h3>Carne de Res</h3>
         <p class="prod-ingred">Romero · Ajo · Tomillo · Pimienta negra</p>
-        <p class="prod-desc">Robusto y aromático. Infusionado con hierbas frescas que realzan cada corte de res. Ideal para marinar antes de la parrilla o para terminar un plato caliente.</p>
-        <p class="prod-formato">✦ Botella 250 ml &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$24.900</span></p>
+        <p class="prod-formato" style="margin-top:auto">✦ 250 ml &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$24.900</span></p>
         <button class="btn-agregar" onclick="addToCart('Aceite Carne de Res','Aceite de Oliva',24900,'img/ao-res.png',this)">+ Agregar al carrito</button>
       </div>
     </div>
     <div class="prod-card rv" style="transition-delay:.08s">
       <span class="prod-num">02</span>
-      <div class="prod-img"><img src="img/ao-cerdo.png" alt="Aceite Cerdo y Pollo"/></div>
+      <div class="prod-img" onclick="openProduct(1)" style="cursor:pointer">
+        <img src="img/ao-cerdo.png" alt="Aceite Cerdo y Pollo"/>
+        <div class="prod-img-ov"><span>Ver detalles</span></div>
+      </div>
       <div class="prod-body">
         <span class="prod-tag">Aceite de Oliva</span>
         <h3>Cerdo y Pollo</h3>
         <p class="prod-ingred">Achiote · Naranja · Jengibre · Pimienta rosada</p>
-        <p class="prod-desc">Vibrante y cítrico. El achiote aporta color y profundidad; la naranja y el jengibre añaden frescura y carácter. El aliado perfecto de las carnes blancas.</p>
-        <p class="prod-formato">✦ Botella 250 ml &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$24.900</span></p>
+        <p class="prod-formato" style="margin-top:auto">✦ 250 ml &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$24.900</span></p>
         <button class="btn-agregar" onclick="addToCart('Aceite Cerdo y Pollo','Aceite de Oliva',24900,'img/ao-cerdo.png',this)">+ Agregar al carrito</button>
       </div>
     </div>
     <div class="prod-card rv" style="transition-delay:.16s">
       <span class="prod-num">03</span>
-      <div class="prod-img"><img src="img/ao-clasico.png" alt="Aceite Clásico"/></div>
+      <div class="prod-img" onclick="openProduct(2)" style="cursor:pointer">
+        <img src="img/ao-clasico.png" alt="Aceite Clásico"/>
+        <div class="prod-img-ov"><span>Ver detalles</span></div>
+      </div>
       <div class="prod-body">
         <span class="prod-tag">Aceite de Oliva</span>
         <h3>Clásico</h3>
         <p class="prod-ingred">Albahaca · Perejil · Cilantro · Cebollín</p>
-        <p class="prod-desc">El más versátil de la colección. Hierbas frescas en equilibrio perfecto. Eleva cualquier preparación sin dominarla. De la pasta a la ensalada, siempre funciona.</p>
-        <p class="prod-formato">✦ Botella 250 ml &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$24.900</span></p>
+        <p class="prod-formato" style="margin-top:auto">✦ 250 ml &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$24.900</span></p>
         <button class="btn-agregar" onclick="addToCart('Aceite Clásico','Aceite de Oliva',24900,'img/ao-clasico.png',this)">+ Agregar al carrito</button>
       </div>
     </div>
     <div class="prod-card rv" style="transition-delay:.24s">
       <span class="prod-num">04</span>
-      <div class="prod-img"><img src="img/ao-pescado.png" alt="Aceite Pescado"/></div>
+      <div class="prod-img" onclick="openProduct(3)" style="cursor:pointer">
+        <img src="img/ao-pescado.png" alt="Aceite Pescado"/>
+        <div class="prod-img-ov"><span>Ver detalles</span></div>
+      </div>
       <div class="prod-body">
         <span class="prod-tag">Aceite de Oliva</span>
         <h3>Pescado</h3>
         <p class="prod-ingred">Limón · Perejil · Eneldo · Pimienta blanca</p>
-        <p class="prod-desc">Delicado y elegante. El limón y el eneldo crean el compañero perfecto para el pescado fresco. Suave, aromático y limpio en cada bocado.</p>
-        <p class="prod-formato">✦ Botella 250 ml &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$24.900</span></p>
+        <p class="prod-formato" style="margin-top:auto">✦ 250 ml &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$24.900</span></p>
         <button class="btn-agregar" onclick="addToCart('Aceite Pescado','Aceite de Oliva',24900,'img/ao-pescado.png',this)">+ Agregar al carrito</button>
       </div>
     </div>
@@ -552,49 +589,57 @@
   <div class="prod-grid" style="max-width:1400px;margin:0 auto">
     <div class="prod-card rv">
       <span class="prod-num">05</span>
-      <div class="prod-img"><img src="img/b-res.png" alt="Balsámico Carne de Res"/></div>
+      <div class="prod-img" onclick="openProduct(4)" style="cursor:pointer">
+        <img src="img/b-res.png" alt="Balsámico Carne de Res"/>
+        <div class="prod-img-ov"><span>Ver detalles</span></div>
+      </div>
       <div class="prod-body">
         <span class="prod-tag">Reducción Balsámica</span>
         <h3>Carne de Res</h3>
         <p class="prod-ingred">Vino tinto · Café</p>
-        <p class="prod-desc">Intensa y profunda. Las notas de vino tinto y café se fusionan con el vinagre balsámico para crear una reducción con carácter que complementa los cortes más nobles.</p>
-        <p class="prod-formato">✦ Tubo 300 g &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$19.900</span></p>
+        <p class="prod-formato" style="margin-top:auto">✦ 300 g &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$19.900</span></p>
         <button class="btn-agregar" onclick="addToCart('Balsámico Carne de Res','Reducción Balsámica',19900,'img/b-res.png',this)">+ Agregar al carrito</button>
       </div>
     </div>
     <div class="prod-card rv" style="transition-delay:.08s">
       <span class="prod-num">06</span>
-      <div class="prod-img"><img src="img/b-cerdo.png" alt="Balsámico Pollo y Cerdo"/></div>
+      <div class="prod-img" onclick="openProduct(5)" style="cursor:pointer">
+        <img src="img/b-cerdo.png" alt="Balsámico Pollo y Cerdo"/>
+        <div class="prod-img-ov"><span>Ver detalles</span></div>
+      </div>
       <div class="prod-body">
         <span class="prod-tag">Reducción Balsámica</span>
         <h3>Pollo y Cerdo</h3>
         <p class="prod-ingred">Naranja · Anís · Jengibre</p>
-        <p class="prod-desc">Frutal y especiada. La naranja aporta frescura, el anís profundidad aromática y el jengibre un toque cálido y envolvente. Perfecta para glasear carnes blancas.</p>
-        <p class="prod-formato">✦ Tubo 300 g &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$19.900</span></p>
+        <p class="prod-formato" style="margin-top:auto">✦ 300 g &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$19.900</span></p>
         <button class="btn-agregar" onclick="addToCart('Balsámico Pollo y Cerdo','Reducción Balsámica',19900,'img/b-cerdo.png',this)">+ Agregar al carrito</button>
       </div>
     </div>
     <div class="prod-card rv" style="transition-delay:.16s">
       <span class="prod-num">07</span>
-      <div class="prod-img"><img src="img/b-clasico.png" alt="Balsámico Clásico"/></div>
+      <div class="prod-img" onclick="openProduct(6)" style="cursor:pointer">
+        <img src="img/b-clasico.png" alt="Balsámico Clásico"/>
+        <div class="prod-img-ov"><span>Ver detalles</span></div>
+      </div>
       <div class="prod-body">
         <span class="prod-tag">Reducción Balsámica</span>
         <h3>Clásico</h3>
         <p class="prod-ingred">Vino blanco · Finas hierbas</p>
-        <p class="prod-desc">Agridulce en equilibrio perfecto. Elaborada con vino blanco y finas hierbas seleccionadas. La referencia de la colección: versátil, elegante e indispensable.</p>
-        <p class="prod-formato">✦ Tubo 300 g &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$19.900</span></p>
+        <p class="prod-formato" style="margin-top:auto">✦ 300 g &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$19.900</span></p>
         <button class="btn-agregar" onclick="addToCart('Balsámico Clásico','Reducción Balsámica',19900,'img/b-clasico.png',this)">+ Agregar al carrito</button>
       </div>
     </div>
     <div class="prod-card rv" style="transition-delay:.24s">
       <span class="prod-num">08</span>
-      <div class="prod-img"><img src="img/b-pescado.png" alt="Balsámico Pescado"/></div>
+      <div class="prod-img" onclick="openProduct(7)" style="cursor:pointer">
+        <img src="img/b-pescado.png" alt="Balsámico Pescado"/>
+        <div class="prod-img-ov"><span>Ver detalles</span></div>
+      </div>
       <div class="prod-body">
         <span class="prod-tag">Reducción Balsámica</span>
         <h3>Pescado</h3>
         <p class="prod-ingred">Ajo · Perejil · Pimienta</p>
-        <p class="prod-desc">Fresca y aromática. El ajo y el perejil aportan un perfil vegetal y limpio que realza el sabor del pescado sin opacar su delicadeza natural. Brillante y expresiva.</p>
-        <p class="prod-formato">✦ Tubo 300 g &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$19.900</span></p>
+        <p class="prod-formato" style="margin-top:auto">✦ 300 g &nbsp;·&nbsp; <span style="color:var(--ds);font-weight:700">$19.900</span></p>
         <button class="btn-agregar" onclick="addToCart('Balsámico Pescado','Reducción Balsámica',19900,'img/b-pescado.png',this)">+ Agregar al carrito</button>
       </div>
     </div>
@@ -989,6 +1034,122 @@
 
   // inicializar badge al cargar
   updateBadge();
+</script>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="pm-overlay" id="pmOverlay" onclick="closeProdModal(event)">
+  <div class="pm-box" id="pmBox">
+    <button class="pm-close" onclick="closeProdModal()">✕</button>
+    <div class="pm-img">
+      <img id="pmImg" src="" alt=""/>
+    </div>
+    <div class="pm-body">
+      <span class="prod-tag" id="pmTag"></span>
+      <h2 class="pm-name" id="pmName"></h2>
+      <p class="prod-ingred" id="pmIngred"></p>
+      <p class="pm-desc" id="pmDesc"></p>
+      <div id="pmPairsWrap">
+        <span class="pm-pairs-label">Maridaje ideal</span>
+        <div class="pm-pairs" id="pmPairs"></div>
+      </div>
+      <p class="pm-formato" id="pmFormato"></p>
+      <button class="btn-agregar" id="pmCartBtn">+ Agregar al carrito</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const PRODUCTS = [
+  {
+    img:'img/ao-res.png', tag:'Aceite de Oliva', name:'Carne de Res',
+    ingred:'Romero · Ajo · Tomillo · Pimienta negra',
+    desc:'Robusto y aromático. Infusionado con hierbas frescas que realzan cada corte de res. Ideal para marinar antes de la parrilla, sellar en sartén o terminar un plato caliente.',
+    pairs:['Lomo fino','Costilla','Churrasco','Chuletón','Papas asadas'],
+    formato:'✦ Botella 250 ml · $24.900',
+    cartName:'Aceite Carne de Res', category:'Aceite de Oliva', price:24900
+  },
+  {
+    img:'img/ao-cerdo.png', tag:'Aceite de Oliva', name:'Cerdo y Pollo',
+    ingred:'Achiote · Naranja · Jengibre · Pimienta rosada',
+    desc:'Vibrante y cítrico. El achiote aporta color y profundidad; la naranja y el jengibre añaden frescura y carácter. El aliado perfecto de las carnes blancas para marinar o glasear.',
+    pairs:['Pollo asado','Cerdo en salsa','Alitas','Lomo de cerdo','Tacos'],
+    formato:'✦ Botella 250 ml · $24.900',
+    cartName:'Aceite Cerdo y Pollo', category:'Aceite de Oliva', price:24900
+  },
+  {
+    img:'img/ao-clasico.png', tag:'Aceite de Oliva', name:'Clásico',
+    ingred:'Albahaca · Perejil · Cilantro · Cebollín',
+    desc:'El más versátil de la colección. Hierbas frescas en equilibrio perfecto. Eleva cualquier preparación sin dominarla. De la pasta a la ensalada, de la bruschetta a los vegetales.',
+    pairs:['Pasta','Ensalada','Bruschetta','Vegetales','Pan artesanal'],
+    formato:'✦ Botella 250 ml · $24.900',
+    cartName:'Aceite Clásico', category:'Aceite de Oliva', price:24900
+  },
+  {
+    img:'img/ao-pescado.png', tag:'Aceite de Oliva', name:'Pescado',
+    ingred:'Limón · Perejil · Eneldo · Pimienta blanca',
+    desc:'Delicado y elegante. El limón y el eneldo crean el compañero perfecto para el pescado fresco. Suave, aromático y limpio en cada bocado. También ideal para mariscos.',
+    pairs:['Salmón','Tilapia','Robalo','Camarones','Ceviche'],
+    formato:'✦ Botella 250 ml · $24.900',
+    cartName:'Aceite Pescado', category:'Aceite de Oliva', price:24900
+  },
+  {
+    img:'img/b-res.png', tag:'Reducción Balsámica', name:'Carne de Res',
+    ingred:'Vino tinto · Café',
+    desc:'Intensa y profunda. Las notas de vino tinto y café se fusionan con el vinagre balsámico para crear una reducción con carácter que complementa los cortes más nobles. Aplicar al final, sobre el plato servido.',
+    pairs:['Filete','Costilla','Churrasco','Quesos maduros','Hongos'],
+    formato:'✦ Tubo 300 g · $19.900',
+    cartName:'Balsámico Carne de Res', category:'Reducción Balsámica', price:19900
+  },
+  {
+    img:'img/b-cerdo.png', tag:'Reducción Balsámica', name:'Pollo y Cerdo',
+    ingred:'Naranja · Anís · Jengibre',
+    desc:'Frutal y especiada. La naranja aporta frescura, el anís profundidad aromática y el jengibre un toque cálido y envolvente. Perfecta para glasear carnes blancas o usar al momento de servir.',
+    pairs:['Pollo a la plancha','Cerdo glaseado','Muslos de pollo','Ensaladas','Wraps'],
+    formato:'✦ Tubo 300 g · $19.900',
+    cartName:'Balsámico Pollo y Cerdo', category:'Reducción Balsámica', price:19900
+  },
+  {
+    img:'img/b-clasico.png', tag:'Reducción Balsámica', name:'Clásico',
+    ingred:'Vino blanco · Finas hierbas',
+    desc:'Agridulce en equilibrio perfecto. Elaborada con vino blanco y finas hierbas seleccionadas. La referencia de la colección: versátil, elegante e indispensable. Ideal para ensaladas, tablas de queso y pasta.',
+    pairs:['Ensalada caprese','Burrata','Pasta','Bruschetta','Tabla de quesos'],
+    formato:'✦ Tubo 300 g · $19.900',
+    cartName:'Balsámico Clásico', category:'Reducción Balsámica', price:19900
+  },
+  {
+    img:'img/b-pescado.png', tag:'Reducción Balsámica', name:'Pescado',
+    ingred:'Ajo · Perejil · Pimienta',
+    desc:'Fresca y aromática. El ajo y el perejil aportan un perfil vegetal y limpio que realza el sabor del pescado sin opacar su delicadeza natural. Brillante y expresiva al servir.',
+    pairs:['Salmón al horno','Tilapia','Camarones','Pulpo','Ceviche'],
+    formato:'✦ Tubo 300 g · $19.900',
+    cartName:'Balsámico Pescado', category:'Reducción Balsámica', price:19900
+  }
+];
+
+function openProduct(idx){
+  const p = PRODUCTS[idx];
+  document.getElementById('pmImg').src = p.img;
+  document.getElementById('pmImg').alt = p.name;
+  document.getElementById('pmTag').textContent = p.tag;
+  document.getElementById('pmName').textContent = p.name;
+  document.getElementById('pmIngred').textContent = p.ingred;
+  document.getElementById('pmDesc').textContent = p.desc;
+  document.getElementById('pmFormato').textContent = p.formato;
+  const pairsEl = document.getElementById('pmPairs');
+  pairsEl.innerHTML = p.pairs.map(pr=>`<span class="pm-pair">${pr}</span>`).join('');
+  const btn = document.getElementById('pmCartBtn');
+  btn.onclick = function(){ addToCart(p.cartName, p.category, p.price, p.img, btn); };
+  document.getElementById('pmOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProdModal(e){
+  if(e && e.target !== document.getElementById('pmOverlay')) return;
+  document.getElementById('pmOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') { document.getElementById('pmOverlay').classList.remove('open'); document.body.style.overflow=''; } });
 </script>
 </body>
 </html>
