@@ -312,7 +312,15 @@
     /* RESPONSIVE */
     @media(max-width:1200px){.recetas-grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:1100px){.prod-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:900px){.hero{grid-template-columns:1fr}.hero-right{display:none}.story{grid-template-columns:1fr;gap:40px}.ft-inner{grid-template-columns:1fr 1fr;gap:36px}}
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr;min-height:auto}
+      .hero-right{display:block;height:55vw;min-height:300px;max-height:480px}
+      .hero-showcase{height:100%}
+      .sc-img{height:100%}
+      .sc-img img{height:100%;width:100%;object-fit:cover}
+      .story{grid-template-columns:1fr;gap:40px}
+      .ft-inner{grid-template-columns:1fr 1fr;gap:36px}
+    }
     @media(max-width:640px){
       /* layout */
       .prod-grid{grid-template-columns:1fr 1fr}
@@ -330,10 +338,11 @@
       .galeria .sec-head{padding:0 5%}
       /* hero mobile */
       .hero{min-height:auto;padding-top:64px}
-      .hero-left{padding:44px 5% 44px 5%}
-      .hero h1{font-size:clamp(36px,9vw,54px)}
-      .hero-p{margin-bottom:28px}
-      .hero-lines{margin-bottom:28px}
+      .hero-left{padding:36px 5% 32px 5%}
+      .hero h1{font-size:clamp(34px,9vw,52px)}
+      .hero-p{margin-bottom:22px}
+      .hero-lines{margin-bottom:22px}
+      .hero-right{height:72vw;min-height:260px;max-height:400px}
       /* tabs productos */
       .line-tab{padding:12px 16px;font-size:7.5px}
       .line-tabs-wrap{margin-bottom:24px;overflow-x:auto;flex-wrap:nowrap}
